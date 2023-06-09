@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Producto } from "../entities/producto.entity";
 import { Repository } from "typeorm";
@@ -32,6 +32,57 @@ export class ProductoService {
     }
 
     async update( dto:UpdateProductDto , id:Producto["id"] ) {
+
+        const product = await this.productoRepo.findOne({ where: {id} })
         
+        if( dto.categoryId ) {
+            const categoria =  await this.categoriaSrv.searchById(dto.categoryId)
+            product.categoria = categoria
+        }
+
+        this.productoRepo.merge(product, dto)
+
+        return this.productoRepo.save(product)
+       
     }
+
+    async findOne(id:Producto["id"]) {
+        const product = await this.productoRepo.findOne({
+            where: { id },
+            relations: { categoria: true },
+            select: {categoria: { name: true} }
+        })
+
+        if( !product ) {
+            throw new NotFoundException()
+        }
+        
+        return product
+    }
+
+    async remove( id:Producto["id"]) {
+        const product = await this.searchById(id)   
+
+        try {
+            await this.productoRepo.delete( product.id  )
+            return id
+        } catch (error) {
+            console.log(error);
+            throw new ConflictException()
+        }
+    }
+
+    async searchById(id:Producto["id"]) : Promise<Producto> {
+        const product = await this.productoRepo.findOne({
+            where: {id}
+        })
+
+        if( !product ) { 
+            throw new NotFoundException()
+        }
+
+        return product
+    }
+
+ 
 }

@@ -25,7 +25,15 @@ export class CategoriaService {
 
     // enonctrar una categoria
     async findOne( id:Categoria["id"] ) : Promise<Categoria> {
-        const categoria =  await this.searchById(id)
+        const categoria =  await this.categoriaRepo.findOne({
+            where: {id},
+            relations: {products:true}
+        })
+
+        if( !categoria ) {
+            throw new NotFoundException("Error")
+        }
+
 
         return categoria
     } 
@@ -35,7 +43,7 @@ export class CategoriaService {
         const categoria = await this.searchById(id)
 
         try {
-            await this.categoriaRepo.remove( categoria )
+            await this.categoriaRepo.delete( categoria.id )
             return id
         } catch (error) {
             throw new ConflictException();
