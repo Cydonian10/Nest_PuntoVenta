@@ -21,7 +21,7 @@ export class ProductoService {
     }
 
     async create(dto:CreateProductDto) : Promise<void> {
-        const categoria = await this.categoriaSrv.search(dto.categoryId)
+        const categoria = await this.categoriaSrv.searchById(dto.categoryId)
 
         const newProduct = this.productoRepo.create({
             name:dto.name,

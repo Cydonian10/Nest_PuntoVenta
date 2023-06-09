@@ -8,6 +8,6 @@ export class Categoria extends EntityBase{
     @Column()
     name:string
 
-    @OneToMany(() => Producto, (p) => p.categoria)
+    @OneToMany(() => Producto, (p) => p.categoria, {onDelete:"NO ACTION"})
     products?:Producto[]
 }

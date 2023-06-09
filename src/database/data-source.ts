@@ -6,9 +6,9 @@ export const DataSourceConfig:DataSourceOptions =  {
     url:"postgres://root:123456@localhost:5432/db_tienda",
     entities:[...Entities],
     migrations:["src/database/migrations/*.ts"],
-    synchronize:true,
+    synchronize:false,
     migrationsRun:true,
-    dropSchema:false,
+    dropSchema:true,
     logging:false,
     ssl:false,
 }

@@ -10,7 +10,7 @@ export class Producto extends EntityBase{
     @Column()
     name:string
 
-    @ManyToOne(() => Categoria, (c) => c.products)
+    @ManyToOne(() => Categoria, (c) => c.products,{onDelete:"SET NULL",nullable:true})
     @JoinColumn({name:"categoria_id"})
     categoria:Categoria    
 
