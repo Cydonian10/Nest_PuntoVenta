@@ -1,18 +1,22 @@
-import { CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import {
+  CreateDateColumn,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 export abstract class EntityBase {
-    @PrimaryGeneratedColumn()
-    id?:number
+  @PrimaryGeneratedColumn()
+  id?: number;
 
-    @CreateDateColumn({
+  @CreateDateColumn({
     type: 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP',
-    })
-    createAt?: Date;
+  })
+  createAt?: Date;
 
-    @UpdateDateColumn({
+  @UpdateDateColumn({
     type: 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP',
-    })
-    updateAt?: Date;
+  })
+  updateAt?: Date;
 }

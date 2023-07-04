@@ -1,9 +1,9 @@
 export enum EmpleadoRol {
-    "admin" = "admin",
-    "seller" = "seller"
+  'admin' = 'admin',
+  'seller' = 'seller',
 }
 
 export enum ClienteRol {
-    "visitante" = "visitante",
-    "autenticado" = "autenticado"
+  'visitante' = 'visitante',
+  'autenticado' = 'autenticado',
 }

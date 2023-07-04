@@ -1,25 +1,25 @@
 import { faker } from '@faker-js/faker/locale/es';
 
-export function generateOneProduct ()   {
-    return {
-        name: faker.commerce.product(),
-        categoria: { id: Math.floor(Math.random() * (5 - 1) + 1) }
-    }
+export function generateOneProduct() {
+  return {
+    name: faker.commerce.product(),
+    categoria: { id: Math.floor(Math.random() * (5 - 1) + 1) },
+  };
 }
 
-export function generateManyProductos (size = 10)  {
-    const products = []
+export function generateManyProductos(size = 10) {
+  const products = [];
 
-    for (let index = 0; index <= size - 1; index++) {
-        products.push( generateOneProduct() )        
-    }
+  for (let index = 0; index <= size - 1; index++) {
+    products.push(generateOneProduct());
+  }
 
-    return products
+  return products;
 }
 
 // export function getManyProducts() : {name:string,categoria:{id:number}}[] {
-    
-//     return [ 
+
+//     return [
 //         {  name:"product 1" , categoria :{ id: 1 } },
 //         {  name:"product 2" , categoria :{ id: 2 } },
 //         {  name:"product 3" , categoria :{ id: 3 } },
