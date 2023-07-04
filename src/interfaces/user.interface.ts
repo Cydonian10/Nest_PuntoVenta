@@ -1,9 +1,13 @@
-import { Empleado } from '../entities/empleado.entity';
-import { Cliente } from '../entities/cliente.entity';
-
 export interface IUser {
-  id: number;
+  email: string;
   password: string;
-  cliente: Cliente;
-  empleado: Empleado;
+  empleadoId?: number;
+  clienteId?: number;
+}
+
+export interface IProducto {
+  nombre: string;
+  precio: number;
+  cantidad: number;
+  categoriaId: number;
 }

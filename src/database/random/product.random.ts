@@ -1,9 +1,12 @@
 import { faker } from '@faker-js/faker/locale/es';
+import { CreateProductDto } from 'src/dtos/producto.dto';
 
-export function generateOneProduct() {
+export function generateOneProduct(): CreateProductDto {
   return {
-    name: faker.commerce.product(),
-    categoria: { id: Math.floor(Math.random() * (5 - 1) + 1) },
+    nombre: faker.commerce.product(),
+    precio: Math.floor(Math.random() * (100 - 20) + 20),
+    categoriaId: Math.floor(Math.random() * (5 - 1) + 1),
+    cantidad: Math.floor(Math.random() * (40 - 20) + 20),
   };
 }
 

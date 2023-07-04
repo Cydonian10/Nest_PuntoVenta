@@ -1,5 +1,5 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { Categoria } from '../entities/categoria.entity';
+import { Categoria } from '../database/entities/categoria.entity';
 import { Repository } from 'typeorm';
 import {
   ConflictException,
@@ -23,7 +23,7 @@ export class CategoriaService {
   // creando una categoria
   async create(dto: CreateCategoriaDto) {
     const categoria = new Categoria();
-    categoria.name = dto.name;
+    categoria.nombre = dto.nombre;
 
     return this.categoriaRepo.save(categoria);
   }
@@ -32,7 +32,7 @@ export class CategoriaService {
   async findOne(id: Categoria['id']): Promise<Categoria> {
     const categoria = await this.categoriaRepo.findOne({
       where: { id },
-      relations: { products: true },
+      relations: { productos: true },
     });
 
     if (!categoria) {

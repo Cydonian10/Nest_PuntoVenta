@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Producto } from '../entities/producto.entity';
+import { Producto } from '../database/entities/producto.entity';
 import { Repository } from 'typeorm';
 import { CreateProductDto, UpdateProductDto } from '../dtos/producto.dto';
 import { CategoriaService } from './categoria.service';
@@ -19,15 +19,15 @@ export class ProductoService {
   getAll() {
     return this.productoRepo.find({
       relations: { categoria: true },
-      select: { categoria: { name: true, id: true } },
+      select: { categoria: { nombre: true, id: true } },
     });
   }
 
   async create(dto: CreateProductDto): Promise<Producto> {
-    const categoria = await this.categoriaSrv.searchById(dto.categoryId);
+    const categoria = await this.categoriaSrv.searchById(dto.categoriaId);
 
     const newProduct = this.productoRepo.create({
-      name: dto.name,
+      nombre: dto.nombre,
       categoria,
     });
 
@@ -37,8 +37,8 @@ export class ProductoService {
   async update(dto: UpdateProductDto, id: Producto['id']) {
     const product = await this.productoRepo.findOne({ where: { id } });
 
-    if (dto.categoryId) {
-      const categoria = await this.categoriaSrv.searchById(dto.categoryId);
+    if (dto.categoriaId) {
+      const categoria = await this.categoriaSrv.searchById(dto.categoriaId);
       product.categoria = categoria;
     }
 
@@ -51,7 +51,7 @@ export class ProductoService {
     const product = await this.productoRepo.findOne({
       where: { id },
       relations: { categoria: true },
-      select: { categoria: { name: true } },
+      select: { categoria: { nombre: true } },
     });
 
     if (!product) {

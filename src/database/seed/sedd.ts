@@ -10,6 +10,8 @@ async function executeSeed() {
     await insertCategorias();
     await insertProductos();
 
+    console.log('Seed complete 🌱');
+
     await AppDataSource.destroy();
   } catch (error) {
     console.log(error);

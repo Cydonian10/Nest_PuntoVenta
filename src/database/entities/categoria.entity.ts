@@ -5,11 +5,11 @@ import { Producto } from './producto.entity';
 @Entity()
 export class Categoria extends EntityBase {
   @Column()
-  name: string;
+  nombre: string;
 
   @OneToMany(() => Producto, (p) => p.categoria, {
     onDelete: 'SET NULL',
     nullable: true,
   })
-  products?: Producto[];
+  productos?: Producto[];
 }

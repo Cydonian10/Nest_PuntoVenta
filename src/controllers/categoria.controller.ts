@@ -8,7 +8,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { Categoria } from '../entities/categoria.entity';
+import { Categoria } from '../database/entities/categoria.entity';
 import { CategoriaService } from '../services/categoria.service';
 import { CreateCategoriaDto } from '../dtos/categoria.dto';
 

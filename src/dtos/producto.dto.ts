@@ -1,14 +1,21 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { IsNumber, IsString } from 'class-validator';
+import { IProducto } from 'src/interfaces/user.interface';
 
-export class CreateProductDto {
+export class CreateProductDto implements IProducto {
   @IsString()
   @ApiProperty()
-  name: string;
+  nombre: string;
+
+  @IsNumber()
+  precio: number;
+
+  @IsNumber()
+  cantidad: number;
 
   @IsNumber()
   @ApiProperty()
-  categoryId: number;
+  categoriaId: number;
 }
 
 export class UpdateProductDto extends PartialType(CreateProductDto) {}

@@ -10,22 +10,32 @@ import { EntityBase } from './base-entity';
 import { Categoria } from './categoria.entity';
 import { OrderItem } from './order-item';
 import { Proveedor } from './proveedor';
+import { IProducto } from 'src/interfaces/user.interface';
 
 @Entity()
-export class Producto extends EntityBase {
+export class Producto extends EntityBase implements IProducto {
   @Column()
-  name: string;
+  nombre: string;
 
-  @ManyToOne(() => Categoria, (c) => c.products, {
+  @Column({ type: 'decimal' })
+  precio: number;
+
+  @Column({ type: 'decimal' })
+  cantidad: number;
+
+  @Column({ name: 'categoria_id' })
+  categoriaId: number;
+
+  @ManyToOne(() => Categoria, (c) => c.productos, {
     onDelete: 'SET NULL',
     nullable: true,
   })
   @JoinColumn({ name: 'categoria_id' })
-  categoria: Categoria;
+  categoria?: Categoria;
 
   @OneToMany(() => OrderItem, (orderItem) => orderItem.item)
-  orderItems: OrderItem[];
+  orderItems?: OrderItem[];
 
   @ManyToMany(() => Proveedor)
-  proveedores: Proveedor[];
+  proveedores?: Proveedor[];
 }

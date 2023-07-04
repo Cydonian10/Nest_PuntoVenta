@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class Init1686329526561 implements MigrationInterface {
-    name = 'Init1686329526561'
+export class Init1688485177634 implements MigrationInterface {
+    name = 'Init1688485177634'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`CREATE TYPE "public"."empleado_rol_enum" AS ENUM('admin', 'seller')`);
@@ -21,7 +21,7 @@ export class Init1686329526561 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "order" ADD CONSTRAINT "FK_58998c5eaeaacdd004dec8b5d86" FOREIGN KEY ("order_id") REFERENCES "cliente"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "order_item" ADD CONSTRAINT "FK_357fe6ec2b0346980cd1d3efa7c" FOREIGN KEY ("producto_id") REFERENCES "producto"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "order_item" ADD CONSTRAINT "FK_e9674a6053adbaa1057848cddfa" FOREIGN KEY ("order_id") REFERENCES "order"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
-        await queryRunner.query(`ALTER TABLE "producto" ADD CONSTRAINT "FK_1ae19a0cb542cf735d454bab0b5" FOREIGN KEY ("categoria_id") REFERENCES "categoria"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE "producto" ADD CONSTRAINT "FK_1ae19a0cb542cf735d454bab0b5" FOREIGN KEY ("categoria_id") REFERENCES "categoria"("id") ON DELETE SET NULL ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "proveedor_producto" ADD CONSTRAINT "FK_9e40b51cc2820fb8ae2ffb732d2" FOREIGN KEY ("proveedor_id") REFERENCES "proveedor"("id") ON DELETE CASCADE ON UPDATE CASCADE`);
         await queryRunner.query(`ALTER TABLE "proveedor_producto" ADD CONSTRAINT "FK_4afb11afe089d8f1f553973422c" FOREIGN KEY ("producto_id") REFERENCES "producto"("id") ON DELETE CASCADE ON UPDATE CASCADE`);
     }

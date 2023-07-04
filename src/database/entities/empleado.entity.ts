@@ -1,7 +1,7 @@
 import { Column, Entity, OneToOne } from 'typeorm';
 import { User } from './user.entity';
 import { EntityBase } from './base-entity';
-import { EmpleadoRol } from '../interfaces/rol.enum';
+import { EmpleadoRol } from '../../interfaces/rol.enum';
 
 @Entity()
 export class Empleado extends EntityBase {
