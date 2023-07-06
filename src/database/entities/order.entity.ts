@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { EntityBase } from './base-entity';
-import { Cliente } from './cliente.entity';
 import { OrderItem } from './order-item';
+import { User } from './user.entity';
 
 @Entity()
 export class Order extends EntityBase {
@@ -14,9 +14,9 @@ export class Order extends EntityBase {
   @Column({ type: 'date' })
   fecha: Date;
 
-  @ManyToOne(() => Cliente)
+  @ManyToOne(() => User)
   @JoinColumn({ name: 'order_id' })
-  cliente: Cliente;
+  user: User;
 
   @OneToMany(() => OrderItem, (oI) => oI.order)
   orderItems: OrderItem[];

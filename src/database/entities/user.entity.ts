@@ -1,8 +1,8 @@
-import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
+import { BeforeInsert, Column, Entity, JoinTable, ManyToMany } from 'typeorm';
 import { EntityBase } from './base-entity';
-import { Cliente } from './cliente.entity';
-import { Empleado } from './empleado.entity';
 import { IUser } from '../../interfaces/user.interface';
+import { hash } from 'bcrypt';
+import { Rol } from './rol.entity';
 
 @Entity()
 export class User extends EntityBase implements IUser {
@@ -12,23 +12,31 @@ export class User extends EntityBase implements IUser {
   @Column({ type: 'varchar' })
   password: string;
 
-  @Column({ name: 'cliente_id' })
-  clienteId?: number;
+  @Column({ type: 'varchar' })
+  nombre: string;
 
-  @Column({ name: 'empleado_id' })
-  empleadoId?: number;
+  @Column({ type: 'varchar' })
+  direccion: string;
 
-  @OneToOne(() => Cliente, (c) => c.user, {
-    nullable: true,
-    onDelete: 'CASCADE',
+  @Column({ type: 'varchar' })
+  dni: string;
+
+  @Column({ type: 'varchar' })
+  avatar: string;
+
+  @ManyToMany(() => Rol)
+  @JoinTable({
+    name: 'user_x_rol',
+    joinColumn: { name: 'user_id' },
+    inverseJoinColumn: { name: 'rol_id' },
   })
-  @JoinColumn({ name: 'cliente_id' })
-  cliente?: Cliente;
+  roles: Rol[];
 
-  @OneToOne(() => Empleado, (e) => e.user, {
-    nullable: true,
-    onDelete: 'CASCADE',
-  })
-  @JoinColumn({ name: 'empleado_id' })
-  empleado?: Empleado;
+  @BeforeInsert()
+  async hashPassword() {
+    if (!this.password) {
+      return;
+    }
+    this.password = await hash(this.password, 10);
+  }
 }

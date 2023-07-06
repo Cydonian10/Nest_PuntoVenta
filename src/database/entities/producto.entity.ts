@@ -10,7 +10,8 @@ import { EntityBase } from './base-entity';
 import { Categoria } from './categoria.entity';
 import { OrderItem } from './order-item';
 import { Proveedor } from './proveedor';
-import { IProducto } from 'src/interfaces/user.interface';
+import { Exclude } from 'class-transformer';
+import { IProducto } from '../../interfaces/user.interface';
 
 @Entity()
 export class Producto extends EntityBase implements IProducto {
@@ -23,6 +24,7 @@ export class Producto extends EntityBase implements IProducto {
   @Column({ type: 'decimal' })
   cantidad: number;
 
+  @Exclude()
   @Column({ name: 'categoria_id' })
   categoriaId: number;
 
