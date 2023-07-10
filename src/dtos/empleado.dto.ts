@@ -1,4 +1,4 @@
-import { EmpleadoRol } from '../interfaces/rol.enum';
+import { EmpleadoRol } from '../shared/interfaces/rol.enum';
 
 export class CreateEmpleadoDto {
   nombre: string;

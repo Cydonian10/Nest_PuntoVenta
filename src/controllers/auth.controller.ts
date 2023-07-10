@@ -1,14 +1,28 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { AuthLoginDto, AuthRegisterDto } from 'src/dtos/auth.dto';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
+import { AuthLoginDto, AuthRegisterDto } from '../dtos/auth.dto';
+import { JwtAuthGuard } from 'src/shared/guards/jwt-auth.guard';
+import { DUser } from 'src/shared/decorators/user.decorator';
+import { IPayload } from 'src/shared/interfaces/auth/payload.interface';
+import { UserService } from 'src/services/user.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private userService: UserService,
+  ) {}
 
   @Post()
   async registerEmpleado(@Body() dto: AuthRegisterDto) {
-    const newUserEmpleado = await this.authService.registerEmpleado(dto);
+    const newUserEmpleado = await this.authService.registrarUsuario(dto);
     return newUserEmpleado;
   }
 
@@ -16,5 +30,11 @@ export class AuthController {
   async login(@Body() dto: AuthLoginDto) {
     const user = await this.authService.login(dto);
     return user;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('profile')
+  profile(@DUser() userPyload: IPayload) {
+    return this.userService.perfil(userPyload.userId);
   }
 }

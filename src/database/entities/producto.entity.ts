@@ -11,7 +11,7 @@ import { Categoria } from './categoria.entity';
 import { OrderItem } from './order-item';
 import { Proveedor } from './proveedor';
 import { Exclude } from 'class-transformer';
-import { IProducto } from '../../interfaces/user.interface';
+import { IProducto } from '../../shared/interfaces/user.interface';
 
 @Entity()
 export class Producto extends EntityBase implements IProducto {

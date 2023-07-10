@@ -1,29 +1,29 @@
-import { IsNotEmpty } from 'class-validator';
-import { Rol } from '../database/entities/rol.entity';
+import { IsArray, IsNotEmpty } from 'class-validator';
 
 export class AuthRegisterDto {
   @IsNotEmpty()
   nombre: string;
 
   @IsNotEmpty()
-  address: string;
-
-  @IsNotEmpty()
   dni: string;
 
+  @IsArray()
   @IsNotEmpty()
-  rol: Rol[];
+  rolIds: number[];
 
   @IsNotEmpty()
   email: string;
 
   @IsNotEmpty()
   password: string;
+
+  @IsNotEmpty()
+  direccion: string;
 }
 
 export class AuthLoginDto {
   @IsNotEmpty()
-  email: string;
+  dni: string;
 
   @IsNotEmpty()
   password: string;

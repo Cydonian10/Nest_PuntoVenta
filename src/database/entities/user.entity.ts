@@ -7,16 +7,18 @@ import {
   OneToMany,
 } from 'typeorm';
 import { EntityBase } from './base-entity';
-import { IUser } from '../../interfaces/user.interface';
+import { IUser } from '../../shared/interfaces/user.interface';
 import { hash } from 'bcrypt';
 import { Rol } from './rol.entity';
 import { Order } from './order.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 export class User extends EntityBase implements IUser {
   @Column({ type: 'varchar', unique: true })
   email: string;
 
+  @Exclude()
   @Column({ type: 'varchar' })
   password: string;
 
@@ -26,10 +28,10 @@ export class User extends EntityBase implements IUser {
   @Column({ type: 'varchar' })
   direccion: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', unique: true })
   dni: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', nullable: true })
   avatar: string;
 
   @ManyToMany(() => Rol)

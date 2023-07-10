@@ -1,39 +1,43 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { User } from '../database/entities/user.entity';
-import { Repository } from 'typeorm';
+import {
+  ConflictException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { AuthLoginDto, AuthRegisterDto } from '../dtos/auth.dto';
-import { InjectRepository } from '@nestjs/typeorm';
 import { compareSync } from 'bcrypt';
+import { UserService } from './user.service';
+import { JwtService } from '@nestjs/jwt';
+import { IPayload } from '../shared/interfaces/auth/payload.interface';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectRepository(User) private userRepository: Repository<User>,
+    private userService: UserService,
+    private jwtService: JwtService,
   ) {}
 
-  async registerEmpleado(dto: AuthRegisterDto) {
-    //token
-    //retornamos token
+  async registrarUsuario(dto: AuthRegisterDto) {
+    const user = await this.userService.findOneByDNI(dto.dni);
+    if (user) {
+      throw new ConflictException('DNI ya existe en la base de datos');
+    }
+
+    const newUser = this.userService.crear(dto);
+
+    return newUser;
   }
 
-  async registerCliente(dto: AuthRegisterDto) {
-    //token
-    //retornamos token
-  }
-
-  async validateUser(email: string, password: string) {
-    const user = await this.userRepository.findOne({
-      where: { email },
-    });
+  async validarUsuario(dni: string, password: string) {
+    const user = await this.userService.findOneByDNI(dni);
 
     if (!user) {
-      throw new BadRequestException('Invalid credentianls email');
+      throw new UnauthorizedException('Invalid credentianls email');
     }
 
     const isMatch = compareSync(password, user.password);
 
     if (!isMatch) {
-      throw new BadRequestException('Invalid credentianls password');
+      throw new UnauthorizedException('Invalid credentianls password');
     }
 
     delete user.password;
@@ -41,15 +45,18 @@ export class AuthService {
     return user;
   }
 
-  async login({ email, password }: AuthLoginDto) {
-    const user = await this.validateUser(email, password);
+  async login({ dni, password }: AuthLoginDto) {
+    const user = await this.validarUsuario(dni, password);
+
+    const payload: IPayload = {
+      name: user.nombre,
+      userId: user.id,
+      roles: user.roles,
+    };
 
     // genero el access_token
-
-    return user;
+    return {
+      token: this.jwtService.sign(payload),
+    };
   }
-
-  // registerCliente() {}
-
-  // login() {}
 }
