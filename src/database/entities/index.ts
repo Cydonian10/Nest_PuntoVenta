@@ -1,4 +1,5 @@
 import { Categoria } from './categoria.entity';
+import { Cliente } from './cliente.entity';
 
 import { OrderItem } from './order-item';
 import { Order } from './order.entity';
@@ -9,6 +10,7 @@ import { User } from './user.entity';
 
 export const Entities = [
   User,
+  Cliente,
   Rol,
   Producto,
   Categoria,

@@ -1,8 +1,7 @@
-import { CreateEmpleadoDto } from './empleado.dto';
-import { EmpleadoRol } from '../interfaces/rol.enum';
 import { IsNotEmpty } from 'class-validator';
+import { Rol } from '../database/entities/rol.entity';
 
-export class AuthRegisterEmpleadoDto implements CreateEmpleadoDto {
+export class AuthRegisterDto {
   @IsNotEmpty()
   nombre: string;
 
@@ -13,16 +12,8 @@ export class AuthRegisterEmpleadoDto implements CreateEmpleadoDto {
   dni: string;
 
   @IsNotEmpty()
-  rol: EmpleadoRol;
+  rol: Rol[];
 
-  @IsNotEmpty()
-  email: string;
-
-  @IsNotEmpty()
-  password: string;
-}
-
-export class AuthRegisterClienteDto {
   @IsNotEmpty()
   email: string;
 

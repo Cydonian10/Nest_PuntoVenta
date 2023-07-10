@@ -1,11 +1,7 @@
-import {
-  BadRequestException,
-  ConflictException,
-  Injectable,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { User } from '../database/entities/user.entity';
 import { Repository } from 'typeorm';
-import { AuthLoginDto, AuthRegisterEmpleadoDto } from '../dtos/auth.dto';
+import { AuthLoginDto, AuthRegisterDto } from '../dtos/auth.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { compareSync } from 'bcrypt';
 
@@ -15,12 +11,12 @@ export class AuthService {
     @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
 
-  async registerEmpleado(dto: AuthRegisterEmpleadoDto) {
+  async registerEmpleado(dto: AuthRegisterDto) {
     //token
     //retornamos token
   }
 
-  async registerCliente(dto: AuthRegisterEmpleadoDto) {
+  async registerCliente(dto: AuthRegisterDto) {
     //token
     //retornamos token
   }

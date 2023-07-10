@@ -1,8 +1,16 @@
-import { BeforeInsert, Column, Entity, JoinTable, ManyToMany } from 'typeorm';
+import {
+  BeforeInsert,
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
+} from 'typeorm';
 import { EntityBase } from './base-entity';
 import { IUser } from '../../interfaces/user.interface';
 import { hash } from 'bcrypt';
 import { Rol } from './rol.entity';
+import { Order } from './order.entity';
 
 @Entity()
 export class User extends EntityBase implements IUser {
@@ -31,6 +39,9 @@ export class User extends EntityBase implements IUser {
     inverseJoinColumn: { name: 'rol_id' },
   })
   roles: Rol[];
+
+  @OneToMany(() => Order, (o) => o.user)
+  ordenes: Order[];
 
   @BeforeInsert()
   async hashPassword() {

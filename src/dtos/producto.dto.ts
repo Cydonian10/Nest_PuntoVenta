@@ -1,6 +1,6 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { IsNumber, IsString } from 'class-validator';
-import { IProducto } from 'src/interfaces/user.interface';
+import { IProducto } from '../interfaces/user.interface';
 
 export class CreateProductDto implements IProducto {
   @IsString()
