@@ -11,7 +11,7 @@ export function generateOneRol(position: number): CreateRolDto {
 
 export function generateManyRoles(size = 2) {
   const roles = [];
-  for (let index = 0; index <= size - 1; index++) {
+  for (let index = 0; index < size; index++) {
     roles.push(generateOneRol(index));
   }
 

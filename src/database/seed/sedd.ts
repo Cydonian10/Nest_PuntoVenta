@@ -1,7 +1,10 @@
 import { AppDataSource } from '../data-source';
 import { insertCategorias } from './categoria.seed';
+import { insertClientes } from './cliente.seed';
 import { insertProductos } from './product.seed';
 import { inserRoles } from './rol.seed';
+import { insertUsuarios } from './usuario.seed';
+import { insertVentas } from './venta.seed';
 
 async function executeSeed() {
   try {
@@ -9,8 +12,11 @@ async function executeSeed() {
     await AppDataSource.synchronize();
 
     await inserRoles();
+    await insertUsuarios();
+    await insertClientes();
     await insertCategorias();
     await insertProductos();
+    await insertVentas();
 
     console.log('Seed complete 🌱');
 

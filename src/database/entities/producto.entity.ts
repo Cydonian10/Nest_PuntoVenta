@@ -1,17 +1,10 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToMany,
-  ManyToOne,
-  OneToMany,
-} from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
 import { EntityBase } from './base-entity';
 import { Categoria } from './categoria.entity';
-import { OrderItem } from './order-item';
+import { OrderItem } from '@/database/entities/order-item.entity';
 import { Proveedor } from './proveedor';
 import { Exclude } from 'class-transformer';
-import { IProducto } from '../../shared/interfaces/user.interface';
+import { IProducto } from '@/shared/interfaces/user.interface';
 
 @Entity()
 export class Producto extends EntityBase implements IProducto {

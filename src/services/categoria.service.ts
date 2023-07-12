@@ -1,11 +1,7 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Categoria } from '../database/entities/categoria.entity';
 import { Repository } from 'typeorm';
-import {
-  ConflictException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCategoriaDto, UpdateCategoriaDto } from '../dtos/categoria.dto';
 
 @Injectable()
@@ -55,10 +51,7 @@ export class CategoriaService {
   }
 
   // actualizando categoria
-  async update(
-    dto: UpdateCategoriaDto,
-    id: Categoria['id'],
-  ): Promise<Categoria> {
+  async update(dto: UpdateCategoriaDto, id: Categoria['id']): Promise<Categoria> {
     const categoria = await this.searchById(id);
     this.categoriaRepo.merge(categoria, dto);
     return this.categoriaRepo.save(categoria);

@@ -13,6 +13,10 @@ import { RolService } from './services/rol.service';
 import { RolController } from './controllers/rol.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './shared/strategies/jwt-strategy';
+import { ClienteService } from './services/cliente.service';
+import { ClienteController } from './controllers/cliente.controller';
+import { OrdenService } from './services/orden.service';
+import { OrdenController } from './controllers/orden.controller';
 
 @Module({
   imports: [
@@ -25,6 +29,8 @@ import { JwtStrategy } from './shared/strategies/jwt-strategy';
     ProductController,
     AuthController,
     RolController,
+    ClienteController,
+    OrdenController,
   ],
   providers: [
     AppService,
@@ -34,6 +40,8 @@ import { JwtStrategy } from './shared/strategies/jwt-strategy';
     UserService,
     RolService,
     JwtStrategy,
+    ClienteService,
+    OrdenService,
   ],
 })
 export class AppModule {}

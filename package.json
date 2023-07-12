@@ -22,7 +22,7 @@
     "m:generate": "npm run typeorm -- migration:generate src/database/migrations/$npm_config_name",
     "m:run": "npm run typeorm -- migration:run",
     "m:drop": "npm run typeorm -- schema:drop",
-    "seed": "ts-node src/database/seed/sedd.ts"
+    "seed": "node -r tsconfig-paths/register -r ts-node/register src/database/seed/sedd.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",

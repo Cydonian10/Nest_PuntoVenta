@@ -7,7 +7,7 @@ export class Cliente extends EntityBase {
   @Column({ type: 'varchar' })
   nombre: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', nullable: true })
   direccion: string;
 
   @Column({ type: 'varchar', nullable: true })

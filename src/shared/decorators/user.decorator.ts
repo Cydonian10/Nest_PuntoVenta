@@ -1,5 +1,5 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { Request, request } from 'express';
+import { Request } from 'express';
 import { IPayload } from '../interfaces/auth/payload.interface';
 
 export const DUser = createParamDecorator(
