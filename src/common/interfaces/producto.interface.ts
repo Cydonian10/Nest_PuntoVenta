@@ -1,6 +1,6 @@
 import { CategoriaEntity } from '@/entities/categoria.entity';
 import { OrdenItemEntity } from '@/entities/order-item.entity';
-import { ProveedorEntity } from '@/entities/proveedor';
+import { ProveedorEntity } from '@/entities/proveedor.entity';
 
 export interface IProducto {
   id?: number;

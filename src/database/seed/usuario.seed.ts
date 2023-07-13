@@ -1,4 +1,4 @@
-import { UsuarioEntity } from '@/entities/user.entity';
+import { UsuarioEntity } from '@/entities/usuario.entity';
 import { AppDataSource } from '../data-source';
 import { generateManyUsuarios } from '../random/usuario.random';
 

@@ -1,4 +1,4 @@
-import { UsuarioEntity } from '@/entities/user.entity';
+import { UsuarioEntity } from '@/entities/usuario.entity';
 
 export interface IRol {
   id?: number;

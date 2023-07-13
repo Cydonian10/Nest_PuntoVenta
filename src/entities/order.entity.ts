@@ -4,7 +4,7 @@ import { Exclude, Expose } from 'class-transformer';
 import { BaseEntity } from '@/common/models';
 import { IOrden } from '@/common/interfaces';
 
-import { UsuarioEntity } from './user.entity';
+import { UsuarioEntity } from './usuario.entity';
 import { ClienteEntity } from './cliente.entity';
 import { OrdenItemEntity } from './order-item.entity';
 

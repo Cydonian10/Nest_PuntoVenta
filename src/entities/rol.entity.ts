@@ -1,7 +1,7 @@
 import { Column, Entity, ManyToMany } from 'typeorm';
 import { BaseEntity } from '@/common/models';
 import { IRol } from '@/common/interfaces';
-import { UsuarioEntity } from './user.entity';
+import { UsuarioEntity } from './usuario.entity';
 
 @Entity({ name: 'roles' })
 export class Rol extends BaseEntity implements IRol {

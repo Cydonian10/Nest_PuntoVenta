@@ -6,7 +6,7 @@ import { BaseEntity } from '@/common/models';
 
 import { OrdenItemEntity } from './order-item.entity';
 import { CategoriaEntity } from './categoria.entity';
-import { ProveedorEntity } from './proveedor';
+import { ProveedorEntity } from './proveedor.entity';
 
 @Entity({ name: 'productos' })
 export class ProductoEntity extends BaseEntity implements IProducto {
