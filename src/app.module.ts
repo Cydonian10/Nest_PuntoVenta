@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+
 import { DatabaseModule } from './database/database.module';
 import { CategoriaService } from './services/categoria.service';
 import { CategoriaController } from './controllers/categoria.controller';
@@ -24,7 +23,6 @@ import { OrdenController } from './controllers/orden.controller';
     JwtModule.register({ secret: '123', signOptions: { expiresIn: '1h' } }),
   ],
   controllers: [
-    AppController,
     CategoriaController,
     ProductController,
     AuthController,
@@ -33,7 +31,6 @@ import { OrdenController } from './controllers/orden.controller';
     OrdenController,
   ],
   providers: [
-    AppService,
     CategoriaService,
     ProductoService,
     AuthService,
