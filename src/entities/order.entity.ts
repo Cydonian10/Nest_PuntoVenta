@@ -1,12 +1,15 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
-import { EntityBase } from './base-entity';
-import { OrderItem } from './order-item.entity';
-import { User } from './user.entity';
-import { Cliente } from './cliente.entity';
 import { Exclude, Expose } from 'class-transformer';
 
-@Entity()
-export class Order extends EntityBase {
+import { BaseEntity } from '@/common/models';
+import { IOrden } from '@/common/interfaces';
+
+import { UsuarioEntity } from './user.entity';
+import { ClienteEntity } from './cliente.entity';
+import { OrdenItemEntity } from './order-item.entity';
+
+@Entity('ordenes')
+export class OrderEntity extends BaseEntity implements IOrden {
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   total: number;
 
@@ -17,26 +20,26 @@ export class Order extends EntityBase {
   fecha: Date;
 
   @Exclude()
-  @Column({ name: 'user_id' })
-  userId: number;
+  @Column({ name: 'usuario_id' })
+  usuarioId: number;
 
   @Exclude()
-  @ManyToOne(() => User)
-  @JoinColumn({ name: 'user_id' })
-  user: User;
+  @ManyToOne(() => UsuarioEntity)
+  @JoinColumn({ name: 'usuario_id' })
+  usuario: UsuarioEntity;
 
   @Exclude()
   @Column({ name: 'cliente_id' })
   clienteId: number;
 
   @Exclude()
-  @ManyToOne(() => Cliente)
+  @ManyToOne(() => ClienteEntity)
   @JoinColumn({ name: 'cliente_id' })
-  cliente: Cliente;
+  cliente: ClienteEntity;
 
   @Exclude()
-  @OneToMany(() => OrderItem, (oI) => oI.order)
-  orderItems: OrderItem[];
+  @OneToMany(() => OrdenItemEntity, (oI) => oI.orden)
+  orderItems: OrdenItemEntity[];
 
   @Expose()
   get datosCliente() {
@@ -48,7 +51,7 @@ export class Order extends EntityBase {
 
   @Expose()
   get nombreVendedor() {
-    return this.user.nombre;
+    return this.usuario.nombre;
   }
 
   @Expose()
@@ -56,7 +59,7 @@ export class Order extends EntityBase {
     return this.orderItems.map((item) => {
       const { precio, nombre } = item.item;
       return {
-        quantity: item.quantity,
+        quantity: item.cantidad,
         precio,
         nombre,
       };

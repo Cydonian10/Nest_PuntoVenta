@@ -1,20 +1,15 @@
-import {
-  BeforeInsert,
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  OneToMany,
-} from 'typeorm';
-import { EntityBase } from './base-entity';
-import { IUser } from '../../shared/interfaces/user.interface';
-import { hash } from 'bcrypt';
-import { Rol } from './rol.entity';
-import { Order } from './order.entity';
+import { BeforeInsert, Column, Entity, JoinTable, ManyToMany, OneToMany } from 'typeorm';
 import { Exclude } from 'class-transformer';
+import { hash } from 'bcrypt';
 
-@Entity()
-export class User extends EntityBase implements IUser {
+import { BaseEntity } from '@/common/models';
+import { IUser } from '@/common/interfaces';
+
+import { OrderEntity } from './order.entity';
+import { Rol } from './rol.entity';
+
+@Entity({ name: 'usuarios' })
+export class UsuarioEntity extends BaseEntity implements IUser {
   @Column({ type: 'varchar', unique: true })
   email: string;
 
@@ -36,14 +31,14 @@ export class User extends EntityBase implements IUser {
 
   @ManyToMany(() => Rol)
   @JoinTable({
-    name: 'user_x_rol',
-    joinColumn: { name: 'user_id' },
+    name: 'usuario_x_rol',
+    joinColumn: { name: 'usuario_id' },
     inverseJoinColumn: { name: 'rol_id' },
   })
   roles: Rol[];
 
-  @OneToMany(() => Order, (o) => o.user)
-  ordenes: Order[];
+  @OneToMany(() => OrderEntity, (o) => o.usuario)
+  ordenes: OrderEntity[];
 
   @BeforeInsert()
   async hashPassword() {

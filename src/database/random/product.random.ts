@@ -6,7 +6,7 @@ export function generateOneProduct(): CreateProductDto {
     nombre: faker.commerce.product(),
     precio: Math.floor(Math.random() * (100 - 20) + 20),
     categoriaId: Math.floor(Math.random() * (5 - 1) + 1),
-    cantidad: Math.floor(Math.random() * (40 - 20) + 20),
+    stock: Math.floor(Math.random() * (40 - 20) + 20),
   };
 }
 

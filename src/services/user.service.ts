@@ -1,21 +1,21 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
-import { User } from '../database/entities/user.entity';
+import { UsuarioEntity } from '@/entities/user.entity';
 import { AuthRegisterDto } from '../dtos/auth.dto';
-import { Rol } from '../database/entities/rol.entity';
+import { Rol } from '@/entities/rol.entity';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User) private userRepository: Repository<User>,
+    @InjectRepository(UsuarioEntity) private userRepository: Repository<UsuarioEntity>,
     @InjectRepository(Rol) private rolRepository: Repository<Rol>,
   ) {}
 
   /**
    * Buscar usuario por email
    */
-  findOneByDNI(dni: User['dni']): Promise<User | undefined> {
+  findOneByDNI(dni: UsuarioEntity['dni']): Promise<UsuarioEntity | undefined> {
     return this.userRepository.findOne({
       where: { dni },
       relations: { roles: true },
@@ -26,7 +26,7 @@ export class UserService {
   /**
    * Creando un usuario
    */
-  async crear(dto: AuthRegisterDto): Promise<User> {
+  async crear(dto: AuthRegisterDto): Promise<UsuarioEntity> {
     const roles = await this.rolRepository.findBy({
       id: In([...dto.rolIds]),
     });
@@ -38,7 +38,7 @@ export class UserService {
   /**
    * Perfil de usuario
    */
-  async perfil(id: User['id']) {
+  async perfil(id: UsuarioEntity['id']) {
     const user = await this.userRepository.findOne({
       where: { id },
       relations: { roles: true },

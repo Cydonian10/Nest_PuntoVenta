@@ -1,14 +1,5 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  ParseIntPipe,
-  Post,
-  Put,
-} from '@nestjs/common';
-import { Categoria } from '../database/entities/categoria.entity';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
+import { CategoriaEntity } from '@/entities/categoria.entity';
 import { CategoriaService } from '../services/categoria.service';
 import { CreateCategoriaDto } from '../dtos/categoria.dto';
 
@@ -17,7 +8,7 @@ export class CategoriaController {
   constructor(private categoriaSrv: CategoriaService) {}
 
   @Get()
-  getAll(): Promise<Categoria[]> {
+  getAll(): Promise<CategoriaEntity[]> {
     return this.categoriaSrv.getAll();
   }
 
@@ -32,10 +23,7 @@ export class CategoriaController {
   }
 
   @Put(':id')
-  update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() dto: CreateCategoriaDto,
-  ) {
+  update(@Param('id', ParseIntPipe) id: number, @Body() dto: CreateCategoriaDto) {
     return this.categoriaSrv.update(dto, id);
   }
 

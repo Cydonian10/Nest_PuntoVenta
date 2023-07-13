@@ -1,4 +1,4 @@
-import { Rol } from '../../../database/entities/rol.entity';
+import { Rol } from '@/entities/rol.entity';
 
 export interface IPayload {
   userId: number;

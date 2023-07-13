@@ -1,20 +1,15 @@
-import {
-  ConflictException,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
-import { AuthLoginDto, AuthRegisterDto } from '../dtos/auth.dto';
-import { compareSync } from 'bcrypt';
-import { UserService } from './user.service';
+import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { IPayload } from '../shared/interfaces/auth/payload.interface';
+import { compareSync } from 'bcrypt';
+
+import { AuthLoginDto, AuthRegisterDto } from '@/dtos';
+import { IPayload } from '@/common/interfaces';
+
+import { UserService } from './user.service';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private userService: UserService,
-    private jwtService: JwtService,
-  ) {}
+  constructor(private userService: UserService, private jwtService: JwtService) {}
 
   async registrarUsuario(dto: AuthRegisterDto) {
     const user = await this.userService.findOneByDNI(dto.dni);

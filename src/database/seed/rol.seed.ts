@@ -1,5 +1,5 @@
 import { AppDataSource } from '../data-source';
-import { Rol } from '../entities/rol.entity';
+import { Rol } from '@/entities/rol.entity';
 import { generateManyRoles } from '../random/rol.random';
 
 export const inserRoles = async () => {

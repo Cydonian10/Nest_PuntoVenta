@@ -1,10 +1,6 @@
-import {
-  ConflictException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Producto } from '../database/entities/producto.entity';
+import { ProductoEntity } from '@/entities/producto.entity';
 import { Repository } from 'typeorm';
 import { CreateProductDto, UpdateProductDto } from '../dtos/producto.dto';
 import { CategoriaService } from './categoria.service';
@@ -12,7 +8,7 @@ import { CategoriaService } from './categoria.service';
 @Injectable()
 export class ProductoService {
   constructor(
-    @InjectRepository(Producto) private productoRepo: Repository<Producto>,
+    @InjectRepository(ProductoEntity) private productoRepo: Repository<ProductoEntity>,
     private categoriaSrv: CategoriaService,
   ) {}
 
@@ -23,7 +19,7 @@ export class ProductoService {
     });
   }
 
-  async create(dto: CreateProductDto): Promise<Producto> {
+  async create(dto: CreateProductDto): Promise<ProductoEntity> {
     const categoria = await this.categoriaSrv.searchById(dto.categoriaId);
 
     const newProduct = this.productoRepo.create({
@@ -34,7 +30,7 @@ export class ProductoService {
     return this.productoRepo.save(newProduct);
   }
 
-  async update(dto: UpdateProductDto, id: Producto['id']) {
+  async update(dto: UpdateProductDto, id: ProductoEntity['id']) {
     const product = await this.productoRepo.findOne({ where: { id } });
 
     if (dto.categoriaId) {
@@ -47,7 +43,7 @@ export class ProductoService {
     return this.productoRepo.save(product);
   }
 
-  async findOne(id: Producto['id']) {
+  async findOne(id: ProductoEntity['id']) {
     const product = await this.productoRepo.findOne({
       where: { id },
       relations: { categoria: true },
@@ -61,7 +57,7 @@ export class ProductoService {
     return product;
   }
 
-  async remove(id: Producto['id']) {
+  async remove(id: ProductoEntity['id']) {
     const product = await this.searchById(id);
 
     try {
@@ -73,7 +69,7 @@ export class ProductoService {
     }
   }
 
-  async searchById(id: Producto['id']): Promise<Producto> {
+  async searchById(id: ProductoEntity['id']): Promise<ProductoEntity> {
     const product = await this.productoRepo.findOne({
       where: { id },
     });

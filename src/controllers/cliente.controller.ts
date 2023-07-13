@@ -10,10 +10,10 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ClienteService } from 'src/services/cliente.service';
-import { Cliente } from '../database/entities/cliente.entity';
+import { ClienteEntity } from '@/entities/cliente.entity';
 import { CreateClienteDto, UpdateClienteDto } from '../dtos/cliente.dto';
-import { JwtAuthGuard } from '../shared/guards/jwt-auth.guard';
-import { Public } from '../shared/decorators/public.decorator';
+import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
+import { Public } from '../common/decorators/public.decorator';
 
 @UseGuards(JwtAuthGuard)
 @Controller('cliente')
@@ -27,7 +27,7 @@ export class ClienteController {
   }
 
   @Get(':id')
-  async findOne(@Param('id', ParseIntPipe) id: Cliente['id']) {
+  async findOne(@Param('id', ParseIntPipe) id: ClienteEntity['id']) {
     const cliente = await this.clienteService.findOne(id);
     return cliente;
   }
@@ -39,13 +39,13 @@ export class ClienteController {
   }
 
   @Put(':id')
-  async update(@Body() dto: UpdateClienteDto, @Param('id') id: Cliente['id']) {
+  async update(@Body() dto: UpdateClienteDto, @Param('id') id: ClienteEntity['id']) {
     const clienteUpdated = await this.clienteService.update(dto, id);
     return clienteUpdated;
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: Cliente['id']) {
+  async remove(@Param('id') id: ClienteEntity['id']) {
     const idCliente = await this.clienteService.remove(id);
     return idCliente;
   }

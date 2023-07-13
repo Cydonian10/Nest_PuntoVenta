@@ -7,8 +7,9 @@ import {
   IsNumber,
   ValidateNested,
 } from 'class-validator';
-import { CreateOrdenItem } from './ordenItem.dto';
 import { Type } from 'class-transformer';
+
+import { CreateOrdenItem } from './ordenItem.dto';
 
 export class CreateOrdenDto {
   @IsBoolean()

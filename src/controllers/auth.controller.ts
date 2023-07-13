@@ -1,24 +1,14 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  Request,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
 import { AuthLoginDto, AuthRegisterDto } from '../dtos/auth.dto';
-import { JwtAuthGuard } from 'src/shared/guards/jwt-auth.guard';
-import { DUser } from 'src/shared/decorators/user.decorator';
-import { IPayload } from 'src/shared/interfaces/auth/payload.interface';
+import { JwtAuthGuard } from '@/common/guards/jwt-auth.guard';
+import { DUser } from '@/common/decorators/user.decorator';
+import { IPayload } from '@/common/interfaces/payload.interface';
 import { UserService } from 'src/services/user.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(
-    private authService: AuthService,
-    private userService: UserService,
-  ) {}
+  constructor(private authService: AuthService, private userService: UserService) {}
 
   @Post()
   async registerEmpleado(@Body() dto: AuthRegisterDto) {

@@ -1,9 +1,9 @@
+import { UsuarioEntity } from '@/entities/user.entity';
 import { AppDataSource } from '../data-source';
-import { User } from '../entities/user.entity';
 import { generateManyUsuarios } from '../random/usuario.random';
 
 export const insertUsuarios = async () => {
-  const usuarioRepo = AppDataSource.getRepository(User);
+  const usuarioRepo = AppDataSource.getRepository(UsuarioEntity);
 
   const usuarios = await generateManyUsuarios();
 

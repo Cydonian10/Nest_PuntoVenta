@@ -1,9 +1,9 @@
 import { AppDataSource } from '../data-source';
-import { Cliente } from '../entities/cliente.entity';
+import { ClienteEntity } from '@/entities/cliente.entity';
 import { generateManyClientes } from '../random/cliente.random';
 
 export const insertClientes = async () => {
-  const clienteRepo = AppDataSource.getRepository(Cliente);
+  const clienteRepo = AppDataSource.getRepository(ClienteEntity);
 
   const clientes = generateManyClientes();
 

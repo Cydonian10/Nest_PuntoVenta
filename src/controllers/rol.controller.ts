@@ -1,16 +1,7 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  ParseIntPipe,
-  Post,
-  Put,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { RolService } from '../services/rol.service';
 import { CreateRolDto, UpdateRolDto } from '../dtos/rol.dto';
-import { Rol } from '../database/entities/rol.entity';
+import { Rol } from '@/entities/rol.entity';
 
 @Controller('rol')
 export class RolController {
@@ -29,10 +20,7 @@ export class RolController {
   }
 
   @Put(':id')
-  async update(
-    @Body() dto: UpdateRolDto,
-    @Param('id', ParseIntPipe) id: Rol['id'],
-  ) {
+  async update(@Body() dto: UpdateRolDto, @Param('id', ParseIntPipe) id: Rol['id']) {
     const rolUpdate = await this.rolService.update(dto, id);
     return rolUpdate;
   }

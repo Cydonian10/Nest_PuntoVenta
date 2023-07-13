@@ -1,9 +1,9 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Post, UseGuards } from '@nestjs/common';
 import { CreateVentaDto } from 'src/dtos/orden.dto';
 import { OrdenService } from 'src/services/orden.service';
-import { DUser } from 'src/shared/decorators/user.decorator';
-import { JwtAuthGuard } from 'src/shared/guards/jwt-auth.guard';
-import { IPayload } from '../shared/interfaces/auth/payload.interface';
+import { DUser } from '@/common/decorators/user.decorator';
+import { JwtAuthGuard } from '@/common/guards/jwt-auth.guard';
+import { IPayload } from '../common/interfaces/payload.interface';
 
 @UseGuards(JwtAuthGuard)
 @Controller('orden')
@@ -12,7 +12,6 @@ export class OrdenController {
 
   @Post('venta')
   async createVenta(@Body() dto: CreateVentaDto, @DUser() userPayload: IPayload) {
-    console.log(userPayload);
     const venta = await this.ordenService.createVenta(dto, userPayload.userId);
     return venta;
   }
