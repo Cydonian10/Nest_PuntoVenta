@@ -1,7 +1,15 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { IsNumber, IsString } from 'class-validator';
+import {
+  IsEnum,
+  IsNumber,
+  IsOptional,
+  IsPositive,
+  IsString,
+  Min,
+  ValidateIf,
+} from 'class-validator';
 
-import { IProducto } from '@/common/interfaces';
+import { IProducto, UnidadMedida } from '@/common/interfaces';
 
 export class CreateProductDto implements IProducto {
   @IsString()
@@ -10,6 +18,9 @@ export class CreateProductDto implements IProducto {
 
   @IsNumber()
   precio: number;
+
+  @IsEnum(UnidadMedida)
+  unidadeMedida: UnidadMedida;
 
   @IsNumber()
   stock: number;
@@ -20,3 +31,21 @@ export class CreateProductDto implements IProducto {
 }
 
 export class UpdateProductDto extends PartialType(CreateProductDto) {}
+
+export class FilterProductDto {
+  @IsOptional()
+  @IsPositive()
+  limit: number;
+
+  @IsOptional()
+  @Min(0)
+  offset: number;
+
+  @IsOptional()
+  @IsPositive()
+  minPrice: number;
+
+  @ValidateIf((item) => item.minPrice)
+  @IsPositive()
+  maxPrice: number;
+}

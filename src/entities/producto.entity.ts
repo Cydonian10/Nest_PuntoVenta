@@ -1,10 +1,10 @@
 import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
 import { Exclude } from 'class-transformer';
 
-import { IProducto } from '@/common/interfaces';
+import { IProducto, UnidadMedida } from '@/common/interfaces';
 import { BaseEntity } from '@/common/models';
 
-import { OrdenItemEntity } from './order-item.entity';
+import { OrdenItemEntity } from './orden-item.entity';
 import { CategoriaEntity } from './categoria.entity';
 import { ProveedorEntity } from './proveedor.entity';
 
@@ -18,6 +18,9 @@ export class ProductoEntity extends BaseEntity implements IProducto {
 
   @Column({ type: 'decimal' })
   stock: number;
+
+  @Column({ type: 'enum', enum: UnidadMedida, default: UnidadMedida.kilogramo })
+  unidadeMedida: UnidadMedida;
 
   @Exclude()
   @Column({ name: 'categoria_id' })

@@ -14,8 +14,11 @@ import { RolController } from './controllers/rol.controller';
 import { JwtStrategy } from './common/strategies/jwt-strategy';
 import { ClienteService } from './services/cliente.service';
 import { ClienteController } from './controllers/cliente.controller';
-import { OrdenService } from './services/orden.service';
-import { OrdenController } from './controllers/orden.controller';
+import { VentaService } from './services/ventas.service';
+import { VentaController } from './controllers/venta.controller';
+import { OrdenItemnService } from './services/orden-item.service';
+import { OrdenItemController } from './controllers/orden-item.controller';
+
 @Module({
   imports: [
     DatabaseModule,
@@ -27,7 +30,8 @@ import { OrdenController } from './controllers/orden.controller';
     AuthController,
     RolController,
     ClienteController,
-    OrdenController,
+    VentaController,
+    OrdenItemController,
   ],
   providers: [
     CategoriaService,
@@ -37,7 +41,8 @@ import { OrdenController } from './controllers/orden.controller';
     RolService,
     JwtStrategy,
     ClienteService,
-    OrdenService,
+    VentaService,
+    OrdenItemnService,
   ],
 })
 export class AppModule {}

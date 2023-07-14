@@ -1,4 +1,4 @@
-import { OrderEntity } from '@/entities/order.entity';
+import { OrdenEntity } from '@/entities/orden.entity';
 import { Rol } from '@/entities/rol.entity';
 
 export interface IUser {
@@ -10,5 +10,5 @@ export interface IUser {
   dni: string;
   avatar: string;
   roles?: Rol[];
-  ordenes?: OrderEntity[];
+  ordenes?: OrdenEntity[];
 }

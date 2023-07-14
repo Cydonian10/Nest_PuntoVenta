@@ -5,7 +5,7 @@ import { hash } from 'bcrypt';
 import { BaseEntity } from '@/common/models';
 import { IUser } from '@/common/interfaces';
 
-import { OrderEntity } from './order.entity';
+import { OrdenEntity } from './orden.entity';
 import { Rol } from './rol.entity';
 
 @Entity({ name: 'usuarios' })
@@ -37,8 +37,8 @@ export class UsuarioEntity extends BaseEntity implements IUser {
   })
   roles: Rol[];
 
-  @OneToMany(() => OrderEntity, (o) => o.usuario)
-  ordenes: OrderEntity[];
+  @OneToMany(() => OrdenEntity, (o) => o.usuario)
+  ordenes: OrdenEntity[];
 
   @BeforeInsert()
   async hashPassword() {

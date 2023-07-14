@@ -1,8 +1,8 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductoEntity } from '@/entities/producto.entity';
-import { Repository } from 'typeorm';
-import { CreateProductDto, UpdateProductDto } from '../dtos/producto.dto';
+import { Between, FindOptionsWhere, Repository } from 'typeorm';
+import { CreateProductDto, UpdateProductDto, FilterProductDto } from '@/dtos/producto.dto';
 import { CategoriaService } from './categoria.service';
 
 @Injectable()
@@ -12,10 +12,27 @@ export class ProductoService {
     private categoriaSrv: CategoriaService,
   ) {}
 
-  getAll() {
+  getAll(params?: FilterProductDto) {
+    if (params) {
+      const where: FindOptionsWhere<ProductoEntity> = {};
+      const { limit, offset, maxPrice, minPrice } = params;
+      if (minPrice && maxPrice) {
+        where.precio = Between(minPrice, maxPrice);
+      }
+      return this.productoRepo.find({
+        relations: { categoria: true },
+        select: { categoria: { nombre: true, id: true } },
+        where,
+        take: limit,
+        skip: offset,
+        order: { id: 'ASC' },
+      });
+    }
+
     return this.productoRepo.find({
       relations: { categoria: true },
       select: { categoria: { nombre: true, id: true } },
+      order: { id: 'ASC' },
     });
   }
 

@@ -9,7 +9,7 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
-import { CreateOrdenItem } from './ordenItem.dto';
+import { CreateOrdenItemDto } from './ordenItem.dto';
 
 export class CreateOrdenDto {
   @IsBoolean()
@@ -38,6 +38,6 @@ export class CreateVentaDto {
   @ArrayMinSize(1)
   @ArrayNotEmpty()
   @IsArray()
-  @Type(() => CreateOrdenItem)
-  items: CreateOrdenItem[];
+  @Type(() => CreateOrdenItemDto)
+  items: CreateOrdenItemDto[];
 }

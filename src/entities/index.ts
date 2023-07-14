@@ -1,8 +1,8 @@
 import { CategoriaEntity } from './categoria.entity';
 import { ClienteEntity } from './cliente.entity';
 
-import { OrdenItemEntity } from './order-item.entity';
-import { OrderEntity } from './order.entity';
+import { OrdenItemEntity } from './orden-item.entity';
+import { OrdenEntity } from './orden.entity';
 import { ProductoEntity } from './producto.entity';
 import { ProveedorEntity } from './proveedor.entity';
 import { Rol } from './rol.entity';
@@ -14,7 +14,7 @@ export const Entities = [
   Rol,
   ProductoEntity,
   CategoriaEntity,
-  OrderEntity,
+  OrdenEntity,
   OrdenItemEntity,
   ProveedorEntity,
 ];

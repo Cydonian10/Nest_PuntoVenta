@@ -1,16 +1,17 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 
 import { IOrdenItem } from '@/common/interfaces';
+import { BaseEntity } from '@/common/models';
 
 import { ProductoEntity } from './producto.entity';
-import { OrderEntity } from './order.entity';
+import { OrdenEntity } from './orden.entity';
 
 @Entity('orden_items')
-export class OrdenItemEntity implements IOrdenItem {
-  @PrimaryColumn({ name: 'producto_id' })
+export class OrdenItemEntity extends BaseEntity implements IOrdenItem {
+  @Column({ name: 'producto_id' })
   productId: number;
 
-  @PrimaryColumn({ name: 'orden_id' })
+  @Column({ name: 'orden_id' })
   ordenId: number;
 
   @Column({ type: 'int' })
@@ -20,7 +21,7 @@ export class OrdenItemEntity implements IOrdenItem {
   @JoinColumn({ name: 'producto_id' })
   item: ProductoEntity;
 
-  @ManyToOne(() => OrderEntity)
+  @ManyToOne(() => OrdenEntity, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'orden_id' })
-  orden: OrderEntity;
+  orden: OrdenEntity;
 }

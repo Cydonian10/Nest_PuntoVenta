@@ -1,9 +1,9 @@
-import { OrderEntity } from '@/entities/order.entity';
+import { OrdenEntity } from '@/entities/orden.entity';
 
 export interface ICliente {
   id?: number;
   nombre: string;
   direccion: string;
   avatar: string;
-  ordenes: OrderEntity[];
+  ordenes: OrdenEntity[];
 }

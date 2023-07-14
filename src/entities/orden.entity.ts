@@ -6,10 +6,10 @@ import { IOrden } from '@/common/interfaces';
 
 import { UsuarioEntity } from './usuario.entity';
 import { ClienteEntity } from './cliente.entity';
-import { OrdenItemEntity } from './order-item.entity';
+import { OrdenItemEntity } from './orden-item.entity';
 
 @Entity('ordenes')
-export class OrderEntity extends BaseEntity implements IOrden {
+export class OrdenEntity extends BaseEntity implements IOrden {
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   total: number;
 
@@ -38,8 +38,8 @@ export class OrderEntity extends BaseEntity implements IOrden {
   cliente: ClienteEntity;
 
   @Exclude()
-  @OneToMany(() => OrdenItemEntity, (oI) => oI.orden)
-  orderItems: OrdenItemEntity[];
+  @OneToMany(() => OrdenItemEntity, (oI) => oI.orden, { onDelete: 'CASCADE' })
+  ordenItems: OrdenItemEntity[];
 
   @Expose()
   get datosCliente() {
@@ -56,12 +56,14 @@ export class OrderEntity extends BaseEntity implements IOrden {
 
   @Expose()
   get items() {
-    return this.orderItems.map((item) => {
+    return this.ordenItems.map((item) => {
       const { precio, nombre } = item.item;
       return {
-        quantity: item.cantidad,
+        id: item.id,
+        cantidad: item.cantidad,
         precio,
         nombre,
+        productoId: item.productId,
       };
     });
   }

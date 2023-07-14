@@ -1,26 +1,35 @@
+import { IOrdenItem } from '@/common/interfaces';
+import { PartialType } from '@nestjs/swagger';
+
 import {
   ArrayMinSize,
   ArrayNotEmpty,
   IsArray,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   ValidateNested,
 } from 'class-validator';
 
-export class CreateOrdenItem {
-  @IsNotEmpty()
+export class CreateOrdenItemDto implements IOrdenItem {
+  @IsOptional()
+  ordenId?: number;
+
   @IsNumber()
+  @IsNotEmpty()
   productId: number;
 
-  @IsNotEmpty()
   @IsNumber()
-  quantity: number;
+  @IsNotEmpty()
+  cantidad: number;
 }
 
-export class CreateOrdenItems {
+export class CreateOrdenItemsDto {
   @ValidateNested({ each: true })
   @ArrayMinSize(1)
   @ArrayNotEmpty()
   @IsArray()
-  items: CreateOrdenItem[];
+  items: CreateOrdenItemDto[];
 }
+
+export class UpdateOrdenItemDto extends PartialType(CreateOrdenItemDto) {}
