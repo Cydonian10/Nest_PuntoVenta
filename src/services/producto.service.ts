@@ -4,11 +4,12 @@ import { ProductoEntity } from '@/entities/producto.entity';
 import { Between, FindOptionsWhere, Repository } from 'typeorm';
 import { CreateProductDto, UpdateProductDto, FilterProductDto } from '@/dtos/producto.dto';
 import { CategoriaService } from './categoria.service';
+import { CategoriaEntity } from '@/entities/categoria.entity';
 
 @Injectable()
 export class ProductoService {
   constructor(
-    @InjectRepository(ProductoEntity) private productoRepo: Repository<ProductoEntity>,
+    @InjectRepository(ProductoEntity) private productoRepository: Repository<ProductoEntity>,
     private categoriaSrv: CategoriaService,
   ) {}
 
@@ -19,7 +20,7 @@ export class ProductoService {
       if (minPrice && maxPrice) {
         where.precio = Between(minPrice, maxPrice);
       }
-      return this.productoRepo.find({
+      return this.productoRepository.find({
         relations: { categoria: true },
         select: { categoria: { nombre: true, id: true } },
         where,
@@ -29,39 +30,46 @@ export class ProductoService {
       });
     }
 
-    return this.productoRepo.find({
+    return this.productoRepository.find({
       relations: { categoria: true },
       select: { categoria: { nombre: true, id: true } },
       order: { id: 'ASC' },
     });
   }
 
+  getAllByCategoria(categoriaId: CategoriaEntity['id']) {
+    return this.productoRepository.find({
+      where: { categoriaId: categoriaId },
+      relations: { categoria: true },
+    });
+  }
+
   async create(dto: CreateProductDto): Promise<ProductoEntity> {
     const categoria = await this.categoriaSrv.searchById(dto.categoriaId);
 
-    const newProduct = this.productoRepo.create({
+    const newProduct = this.productoRepository.create({
       nombre: dto.nombre,
       categoria,
     });
 
-    return this.productoRepo.save(newProduct);
+    return this.productoRepository.save(newProduct);
   }
 
   async update(dto: UpdateProductDto, id: ProductoEntity['id']) {
-    const product = await this.productoRepo.findOne({ where: { id } });
+    const product = await this.productoRepository.findOne({ where: { id } });
 
     if (dto.categoriaId) {
       const categoria = await this.categoriaSrv.searchById(dto.categoriaId);
       product.categoria = categoria;
     }
 
-    this.productoRepo.merge(product, dto);
+    this.productoRepository.merge(product, dto);
 
-    return this.productoRepo.save(product);
+    return this.productoRepository.save(product);
   }
 
   async findOne(id: ProductoEntity['id']) {
-    const product = await this.productoRepo.findOne({
+    const product = await this.productoRepository.findOne({
       where: { id },
       relations: { categoria: true },
       select: { categoria: { nombre: true } },
@@ -78,7 +86,7 @@ export class ProductoService {
     const product = await this.searchById(id);
 
     try {
-      await this.productoRepo.delete(product.id);
+      await this.productoRepository.delete(product.id);
       return id;
     } catch (error) {
       console.log(error);
@@ -87,7 +95,7 @@ export class ProductoService {
   }
 
   async searchById(id: ProductoEntity['id']): Promise<ProductoEntity> {
-    const product = await this.productoRepo.findOne({
+    const product = await this.productoRepository.findOne({
       where: { id },
     });
 

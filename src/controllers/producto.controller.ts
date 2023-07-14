@@ -22,6 +22,11 @@ export class ProductController {
     return this.productSrv.getAll(params);
   }
 
+  @Get('categoria/:id')
+  async getAllByCategoria(@Param('id', ParseIntPipe) id: number) {
+    return this.productSrv.getAllByCategoria(id);
+  }
+
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.productSrv.findOne(id);
