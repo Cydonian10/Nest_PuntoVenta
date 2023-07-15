@@ -10,14 +10,22 @@ import {
 import { Type } from 'class-transformer';
 
 import { CreateOrdenItemDto } from './ordenItem.dto';
+import { IOrden } from '@/common/interfaces';
+import { ClienteEntity } from '@/entities/cliente.entity';
+import { OrdenItemEntity } from '@/entities/orden-item.entity';
+import { UsuarioEntity } from '@/entities/usuario.entity';
+import { Optional } from '@nestjs/common';
 
-export class CreateOrdenDto {
+export class CreateOrdenDto implements IOrden {
+  @Optional()
+  usuarioId?: number;
+
   @IsBoolean()
   @IsNotEmpty()
   pago: boolean;
 
   @IsNotEmpty()
-  fecha: Date;
+  fecha: string | Date;
 
   @IsNumber()
   @IsNotEmpty()

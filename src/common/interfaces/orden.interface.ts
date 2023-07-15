@@ -5,9 +5,9 @@ import { UsuarioEntity } from '@/entities/usuario.entity';
 export interface IOrden {
   id?: number;
   pago: boolean;
-  fecha: Date;
+  fecha: Date | string;
 
-  usuarioId: number;
+  usuarioId?: number;
   clienteId: number;
   usuario?: UsuarioEntity;
   cliente?: ClienteEntity;

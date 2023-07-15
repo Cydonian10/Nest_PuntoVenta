@@ -19,8 +19,13 @@ export class ProductoEntity extends BaseEntity implements IProducto {
   @Column({ type: 'decimal' })
   stock: number;
 
-  @Column({ type: 'enum', enum: UnidadMedida, default: UnidadMedida.kilogramo })
-  unidadeMedida: UnidadMedida;
+  @Column({
+    type: 'enum',
+    enum: UnidadMedida,
+    default: UnidadMedida.kilogramo,
+    name: 'unidad_medida',
+  })
+  unidadMedida: UnidadMedida;
 
   @Exclude()
   @Column({ name: 'categoria_id' })

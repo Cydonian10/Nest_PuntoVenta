@@ -12,7 +12,7 @@ export interface IProducto {
   nombre: string;
   precio: number;
   stock: number;
-  unidadeMedida: UnidadMedida;
+  unidadMedida: UnidadMedida;
   categoriaId: number;
   categoria?: CategoriaEntity;
   orderItems?: OrdenItemEntity[];

@@ -9,7 +9,8 @@ import { insertVentas } from './venta.seed';
 async function executeSeed() {
   try {
     await AppDataSource.initialize();
-    await AppDataSource.synchronize();
+    await AppDataSource.dropDatabase();
+    await AppDataSource.runMigrations();
 
     await inserRoles();
     await insertUsuarios();

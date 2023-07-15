@@ -16,7 +16,7 @@ function generateOneVenta(): CreateVentaDto {
     ],
     orden: {
       pago: true,
-      fecha: new Date(),
+      fecha: new Date().toString(),
       clienteId: Math.floor(Math.random() * (5 - 1) + 1),
       total: 200,
     },
@@ -40,7 +40,11 @@ export const insertVentas = async () => {
   const ventas = generateManyVentas();
 
   for (let index = 0; index < ventas.length; index++) {
-    const newOrder = orderRepository.create({ ...ventas[index].orden, usuarioId: 2 });
+    const newOrder = orderRepository.create({
+      ...ventas[index].orden,
+      fecha: new Date(ventas[index].orden.fecha),
+      usuarioId: 2,
+    });
 
     const resp = await orderRepository.save(newOrder);
 

@@ -20,7 +20,7 @@ export class CreateProductDto implements IProducto {
   precio: number;
 
   @IsEnum(UnidadMedida)
-  unidadeMedida: UnidadMedida;
+  unidadMedida: UnidadMedida;
 
   @IsNumber()
   stock: number;

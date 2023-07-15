@@ -17,7 +17,7 @@ export class OrdenEntity extends BaseEntity implements IOrden {
   pago: boolean;
 
   @Column({ type: 'date' })
-  fecha: Date;
+  fecha: Date | string;
 
   @Exclude()
   @Column({ name: 'usuario_id' })

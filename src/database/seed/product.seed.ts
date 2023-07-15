@@ -13,7 +13,7 @@ export function generateOneProduct(): CreateProductDto {
     precio: Math.floor(Math.random() * (100 - 20) + 20),
     categoriaId: Math.floor(Math.random() * (5 - 1) + 1),
     stock: Math.floor(Math.random() * (40 - 20) + 20),
-    unidadeMedida: UnidadMedida.unidades,
+    unidadMedida: UnidadMedida.unidades,
   };
 }
 

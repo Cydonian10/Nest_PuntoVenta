@@ -30,9 +30,20 @@ export class VentaController {
     return this.ventaService.encontrarVentas();
   }
 
+  @Get('semana')
+  async econtrarVentasDeLaSemana() {
+    return this.ventaService.econtrarVentasDeLaSemana();
+  }
+
+  @Get('ventas-hoy')
+  async encontrarVentasdelDia() {
+    return this.ventaService.encontrarVentasdelDia();
+  }
+
   @Get('fecha')
-  async findVentasByDate(@Body() dto: { fecha: Date }) {
-    return this.ventaService.encontrarVentaPorFecha(dto.fecha);
+  async findVentasByDate(@Body() dto: { fecha: number }) {
+    console.log(new Date(dto.fecha));
+    return this.ventaService.encontrarVentaPorFecha(new Date(dto.fecha));
   }
 
   @Get(':id')

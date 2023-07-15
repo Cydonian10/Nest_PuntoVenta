@@ -1,6 +1,6 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DataSource, In, Repository, UpdateResult } from 'typeorm';
+import { Between, DataSource, In, Repository, UpdateResult } from 'typeorm';
 
 import { CreateVentaDto } from '@/dtos/orden.dto';
 import { OrdenItemEntity } from '@/entities/orden-item.entity';
@@ -28,6 +28,7 @@ export class VentaService {
        */
       const newOrden = queryRunner.manager.create(OrdenEntity, {
         ...dto.orden,
+        fecha: new Date(dto.orden.fecha),
         usuarioId: userId,
       });
 
@@ -98,6 +99,7 @@ export class VentaService {
       where: { id },
       relations: { cliente: true, usuario: true, ordenItems: { item: true } },
     });
+
     if (!venta) {
       throw new NotFoundException('Venta no encontrada');
     }
@@ -157,6 +159,29 @@ export class VentaService {
     console.log(fecha);
     const ventas = await this.ordenRepository.find({
       where: { fecha },
+      relations: { cliente: true, usuario: true, ordenItems: { item: true } },
+      order: {
+        id: 'ASC',
+      },
+    });
+
+    return ventas;
+  }
+
+  async encontrarVentasdelDia() {
+    const ventas = await this.ordenRepository.find({
+      where: { fecha: new Date() },
+      select: { fecha: true },
+    });
+    console.log(ventas);
+    return ventas.length;
+  }
+
+  async econtrarVentasDeLaSemana() {
+    const ventas = await this.ordenRepository.find({
+      where: {
+        fecha: Between(new Date('2023-07-14 00:00'), new Date()),
+      },
       relations: { cliente: true, usuario: true, ordenItems: { item: true } },
     });
 
